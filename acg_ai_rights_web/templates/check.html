@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+    <h1>鉴定 / 核验</h1>
+    <p class="muted">上传疑似搬运图、改图、AI 图，或粘贴疑似洗稿文本，系统会给出复核提示和相似作品列表。</p>
+
+    <form method="post" enctype="multipart/form-data" class="form">
+        <label>上传图片或文本文件</label>
+        <input type="file" name="file" accept=".jpg,.jpeg,.png,.webp,.bmp,.txt,.md">
+
+        <label>或粘贴需要核验的文本</label>
+        <textarea name="text_content" rows="12" placeholder="把疑似洗稿的同人文、角色设定、简介文案粘贴到这里。"></textarea>
+
+        <button class="btn primary" type="submit">开始核验</button>
+    </form>
+</section>
+{% endblock %}

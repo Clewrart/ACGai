@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+    <h1>已登记作品库</h1>
+    <p class="muted">这里显示本地 SQLite 中登记的作品。MVP 版本默认本机保存，正式部署前应加登录和权限。</p>
+
+    {% if works %}
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>标题</th>
+                <th>创作者</th>
+                <th>类型</th>
+                <th>标签</th>
+                <th>指纹</th>
+                <th>时间</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for w in works %}
+            <tr>
+                <td>#{{ w.id }}</td>
+                <td>
+                    {{ w.title }}
+                    {% if w.platform_url %}
+                    <br><a href="{{ w.platform_url }}" target="_blank">原链接</a>
+                    {% endif %}
+                </td>
+                <td>{{ w.creator_alias }}</td>
+                <td>{{ w.work_type }}</td>
+                <td>{{ w.tags }}</td>
+                <td>
+                    {% if w.phash_hex %}pHash：<code>{{ w.phash_hex }}</code><br>{% endif %}
+                    {% if w.simhash_hex %}SimHash：<code>{{ w.simhash_hex }}</code><br>{% endif %}
+                    {% if w.sha256 %}SHA256：<code>{{ w.sha256[:24] }}...</code>{% endif %}
+                </td>
+                <td>{{ w.created_at }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>还没有登记作品。</p>
+    <a class="btn primary" href="{{ url_for('register') }}">先登记一件作品</a>
+    {% endif %}
+</section>
+{% endblock %}

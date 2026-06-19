@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>{{ title or "ACG 创作者 AI 鉴定与权益试水系统" }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<header class="topbar">
+    <div class="brand">ACG Creator Guard</div>
+    <nav>
+        <a href="{{ url_for('index') }}">首页</a>
+        <a href="{{ url_for('register') }}">登记作品</a>
+        <a href="{{ url_for('check') }}">鉴定核验</a>
+        <a href="{{ url_for('works') }}">作品库</a>
+    </nav>
+</header>
+
+<main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="flash-wrap">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <p>本系统输出仅作创作者自查、平台申诉材料整理和人工复核参考，不作法律定责结论。</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

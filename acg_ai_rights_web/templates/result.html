@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+    <h1>核验结果</h1>
+
+    {% if image_report %}
+    <div class="result-box">
+        <h2>图片技术复核提示</h2>
+        <div class="score score-{{ image_report.ai_risk_level }}">
+            AI 疑似风险：{{ image_report.ai_risk_score }} / 100，等级：{{ image_report.ai_risk_level }}
+        </div>
+        <ul>
+            <li>尺寸：{{ image_report.width }} × {{ image_report.height }}</li>
+            <li>pHash：<code>{{ image_report.phash_hex }}</code></li>
+            <li>SHA256：<code>{{ image_report.file_sha256 }}</code></li>
+            <li>图像熵：{{ image_report.entropy }}</li>
+            <li>高频能量占比：{{ image_report.high_freq_ratio }}</li>
+            <li>边缘密度：{{ image_report.edge_density }}</li>
+            <li>颜色复杂度：{{ image_report.color_complexity }}</li>
+            <li>EXIF 数量：{{ image_report.exif_count }}</li>
+        </ul>
+
+        {% if image_report.risk_reasons %}
+        <h3>复核原因</h3>
+        <ul>
+            {% for r in image_report.risk_reasons %}
+            <li>{{ r }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="result-box">
+        <h2>图片相似作品</h2>
+        {% if image_matches %}
+        <table>
+            <thead>
+                <tr>
+                    <th>作品</th>
+                    <th>创作者</th>
+                    <th>距离</th>
+                    <th>判断</th>
+                    <th>登记时间</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for m in image_matches %}
+                <tr>
+                    <td>
+                        {{ m.title }}
+                        {% if m.platform_url %}
+                        <br><a href="{{ m.platform_url }}" target="_blank">原链接</a>
+                        {% endif %}
+                    </td>
+                    <td>{{ m.creator_alias }}</td>
+                    <td>{{ m.distance }}</td>
+                    <td>{{ m.label }}</td>
+                    <td>{{ m.created_at }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="muted">作品库中还没有可比较的图片指纹。</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if text_report %}
+    <div class="result-box">
+        <h2>文本技术复核提示</h2>
+        <div class="score score-{{ text_report.ai_risk_level }}">
+            AI 疑似风险：{{ text_report.ai_risk_score }} / 100，等级：{{ text_report.ai_risk_level }}
+        </div>
+        <ul>
+            <li>字数：{{ text_report.char_count }}</li>
+            <li>句子数：{{ text_report.sentence_count }}</li>
+            <li>平均句长：{{ text_report.avg_sentence_len }}</li>
+            <li>句长波动 CV：{{ text_report.sentence_len_cv }}</li>
+            <li>字词多样性：{{ text_report.type_token_ratio }}</li>
+            <li>重复 4-gram 比例：{{ text_report.repeat_4gram_ratio }}</li>
+            <li>SimHash：<code>{{ text_report.simhash_hex }}</code></li>
+            <li>SHA256：<code>{{ text_report.text_sha256 }}</code></li>
+        </ul>
+
+        {% if text_report.risk_reasons %}
+        <h3>复核原因</h3>
+        <ul>
+            {% for r in text_report.risk_reasons %}
+            <li>{{ r }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <div class="result-box">
+        <h2>文本相似作品</h2>
+        {% if text_matches %}
+        <table>
+            <thead>
+                <tr>
+                    <th>作品</th>
+                    <th>创作者</th>
+                    <th>SimHash 距离</th>
+                    <th>表面重合</th>
+                    <th>判断</th>
+                    <th>登记时间</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for m in text_matches %}
+                <tr>
+                    <td>
+                        {{ m.title }}
+                        {% if m.platform_url %}
+                        <br><a href="{{ m.platform_url }}" target="_blank">原链接</a>
+                        {% endif %}
+                    </td>
+                    <td>{{ m.creator_alias }}</td>
+                    <td>{{ m.distance }}</td>
+                    <td>{{ m.seq_ratio }}</td>
+                    <td>{{ m.label }}</td>
+                    <td>{{ m.created_at }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="muted">作品库中还没有可比较的文本指纹。</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="actions">
+        <a class="btn" href="{{ url_for('check') }}">继续核验</a>
+        <a class="btn" href="{{ url_for('register') }}">登记新作品</a>
+    </div>
+</section>
+{% endblock %}

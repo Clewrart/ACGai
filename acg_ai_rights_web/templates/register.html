@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+    <h1>登记作品</h1>
+    <p class="muted">用于建立自己的作品指纹库，后续可以做撞图、洗稿、改图核验。</p>
+
+    <form method="post" enctype="multipart/form-data" class="form">
+        <label>作品标题 *</label>
+        <input name="title" placeholder="例：某角色生日贺图 / CP 向短篇 01" required>
+
+        <label>创作者昵称 *</label>
+        <input name="creator_alias" placeholder="例：你的画师名 / 社团名" required>
+
+        <label>作品类型</label>
+        <select name="work_type">
+            <option value="image">同人图 / 漫画页</option>
+            <option value="text">同人文 / 设定文</option>
+            <option value="mixed">混合作品</option>
+        </select>
+
+        <label>原发布链接</label>
+        <input name="platform_url" placeholder="Pixiv / B站 / LOFTER / X / 微博 / AO3 等链接，可空">
+
+        <label>标签</label>
+        <input name="tags" placeholder="例：角色名、CP、作品名、社团、活动名">
+
+        <label>权利说明</label>
+        <textarea name="declaration" rows="3" placeholder="例：本人创作，仅授权指定平台发布，禁止 AI 训练/无授权转载。"></textarea>
+
+        <label>上传图片或文本文件</label>
+        <input type="file" name="file" accept=".jpg,.jpeg,.png,.webp,.bmp,.txt,.md">
+
+        <label>或粘贴同人文本</label>
+        <textarea name="text_content" rows="10" placeholder="适合同人文、设定文、角色小传。"></textarea>
+
+        <button class="btn primary" type="submit">登记作品</button>
+    </form>
+</section>
+{% endblock %}

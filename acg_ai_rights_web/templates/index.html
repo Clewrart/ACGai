@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <h1>面向 ACG 同人二创作者的 AI 鉴定与作品权益试水系统</h1>
+    <p>
+        支持同人图、漫画页、同人文、设定文档的登记存证、近似重复检测、洗稿预警和 AI 疑似度辅助复核。
+    </p>
+    <div class="actions">
+        <a class="btn primary" href="{{ url_for('register') }}">登记我的作品</a>
+        <a class="btn" href="{{ url_for('check') }}">上传作品核验</a>
+    </div>
+</section>
+
+<section class="grid">
+    <div class="card">
+        <h2>作品登记</h2>
+        <p>保存 SHA256、图片感知哈希 pHash、文本 SimHash，建立自己的创作指纹库。</p>
+    </div>
+    <div class="card">
+        <h2>撞图预警</h2>
+        <p>适合发现裁切、压缩、调色、轻微重绘后的同人图相似问题。</p>
+    </div>
+    <div class="card">
+        <h2>洗稿预警</h2>
+        <p>适合同人文、设定文、角色小传的近似文本核验。</p>
+    </div>
+    <div class="card">
+        <h2>AI 疑似度</h2>
+        <p>基于轻量特征输出复核提示，不把 AI 检测结果当作绝对证据。</p>
+    </div>
+</section>
+
+<section class="notice">
+    <h2>为什么不做“一键判定 AI/非 AI”？</h2>
+    <p>
+        ACG 场景里，厚涂、赛璐璐、滤镜、压缩、重绘、描改、临摹和 AI 辅助会混在一起。
+        所以本系统更适合做“风险提示 + 相似度证据 + 人工复核入口”。
+    </p>
+</section>
+{% endblock %}
