@@ -2,7 +2,7 @@
 ### ACG 同人二创作者 AI 鉴定平台
 
 --------------------
-作者Clewrart email: siyu7805@gmail.com
+作者Clewrart Email: siyu7805@gmail.com
 --------------------
 ## License
 
